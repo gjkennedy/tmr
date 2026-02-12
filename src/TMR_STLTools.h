@@ -21,7 +21,7 @@
 #ifndef TMR_STL_TOOLS_H
 #define TMR_STL_TOOLS_H
 
-#include "TACSBVec.h"
+#include "TMRBase.h"
 #include "TMROctForest.h"
 
 /*
@@ -41,9 +41,9 @@
   distributed across processors.
 */
 
-int TMR_GenerateSTLTriangles(int root, TMROctForest *filter, TACSBVec *x,
-                             int x_offset, double cutoff, int *_ntris,
-                             TMR_STLTriangle **_tris);
+int TMR_GenerateSTLTriangles(int root, TMROctForest* filter, TACSBVec* x,
+                             int x_offset, double cutoff, int* _ntris,
+                             TMR_STLTriangle** _tris);
 
 /*
   Given the design variables, write out a binary file containing the
@@ -65,8 +65,8 @@ int TMR_GenerateSTLTriangles(int root, TMROctForest *filter, TACSBVec *x,
   1 integer representing the number of triangles = ntri
   3*ntri doubles representing the cell-vertices in CCW ordering
 */
-extern int TMR_GenerateBinFile(const char *filename, TMROctForest *filter,
-                               TACSBVec *x, int x_offset, double cutoff);
+extern int TMR_GenerateBinFile(const char* filename, TMROctForest* filter,
+                               TACSBVec* x, int x_offset, double cutoff);
 
 /*
   Take the binary file generated from above and convert to the .STL
@@ -75,6 +75,6 @@ extern int TMR_GenerateBinFile(const char *filename, TMROctForest *filter,
   Note that this is a serial code and should only be called by a
   single processor.
 */
-extern int TMR_ConvertBinToSTL(const char *binfile, const char *stlfile);
+extern int TMR_ConvertBinToSTL(const char* binfile, const char* stlfile);
 
 #endif  // TMR_STL_TOOLS_H

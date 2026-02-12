@@ -1,0 +1,12 @@
+numpy
+scipy
+matplotlib
+niceplots
+black>=25.1.0
+pybind11
+pre-commit>=3.5.0
+mpi4py
+
+# Windows-specific dependencies (automatically skipped on other platforms)
+mkl; sys_platform == 'win32'
+mkl-devel; sys_platform == 'win32'

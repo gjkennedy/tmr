@@ -70,15 +70,15 @@ void TMRInitialize() {
     MPI_Type_create_struct(1, counts, offset, types, &TMRPoint_MPI_type);
     MPI_Type_commit(&TMRPoint_MPI_type);
 
-    // Create the index/weight pair data
-    int len[2] = {1, 1};
-    MPI_Aint disp[2];
-    disp[0] = offsetof(TMRIndexWeight, index);
-    disp[1] = offsetof(TMRIndexWeight, weight);
-    types[0] = MPI_INT;
-    types[1] = MPI_DOUBLE;
-    MPI_Type_create_struct(2, len, disp, types, &TMRIndexWeight_MPI_type);
-    MPI_Type_commit(&TMRIndexWeight_MPI_type);
+    // // Create the index/weight pair data
+    // int len[2] = {1, 1};
+    // MPI_Aint disp[2];
+    // disp[0] = offsetof(TMRIndexWeight, index);
+    // disp[1] = offsetof(TMRIndexWeight, weight);
+    // types[0] = MPI_INT;
+    // types[1] = MPI_DOUBLE;
+    // MPI_Type_create_struct(2, len, disp, types, &TMRIndexWeight_MPI_type);
+    // MPI_Type_commit(&TMRIndexWeight_MPI_type);
 
     counts[0] = 3;
     offset[0] = 0;
@@ -105,71 +105,4 @@ void TMRFinalize() {
   MPI_Type_free(&TMRPoint_MPI_type);
   MPI_Type_free(&TMRIndexWeight_MPI_type);
   MPI_Type_free(&TMR_STLTriangle_MPI_type);
-}
-
-TMREntity::TMREntity() : entity_id(entity_id_count) {
-  entity_id_count++;
-  name = NULL;
-  ref_count = 0;
-}
-
-TMREntity::~TMREntity() {
-  if (name) {
-    delete[] name;
-  }
-}
-
-int TMREntity::entity_id_count = 0;
-
-/*
-  Set the name associate with this object
-*/
-void TMREntity::setName(const char *_name) {
-  if (name) {
-    delete[] name;
-  }
-  if (_name) {
-    name = new char[strlen(_name) + 1];
-    strcpy(name, _name);
-  }
-}
-
-/*
-  Retrieve the name associated with this object
-*/
-const char *TMREntity::getName() const { return name; }
-
-/*
-  Increment the reference count
-*/
-void TMREntity::incref() { ref_count++; }
-
-/*
-  Decrease the reference count
-*/
-void TMREntity::decref() {
-  ref_count--;
-  if (ref_count == 0) {
-    delete this;
-  }
-}
-
-// Set the default convergence criteria
-double TMREntity::eps_dist = 1e-6;
-double TMREntity::eps_cosine = 1e-6;
-
-/*
-  Set the geometric tolerances
-*/
-void TMREntity::setTolerances(double _eps_dist, double _eps_cosine) {
-  eps_dist = _eps_dist;
-  eps_cosine = _eps_cosine;
-}
-
-/*
-  Get the geometric tolerances
-*/
-void TMREntity::getTolerances(double *_eps_dist, double *_eps_cosine) {
-  *_eps_dist = eps_dist;
-  *_eps_cosine = eps_cosine;
 }
